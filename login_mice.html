@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Kuis MICE</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input[type="password"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login Kuis MICE</h2>
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" placeholder="Masukkan nama Anda"><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Masukkan Password">
+        <p id="error" class="error-message" style="display: none;">Password salah!</p>
+        <button onclick="checkLogin()">Mulai Kuis</button>
+    </div>
+
+    <script>
+        const correctPassword = "passwordmice"; // Ganti dengan password Anda
+
+        function checkLogin() {
+            const passwordInput = document.getElementById('password');
+            const namaInput = document.getElementById('nama');
+            const errorMessage = document.getElementById('error');
+
+            if (passwordInput.value === correctPassword && namaInput.value.trim() !== "") {
+                localStorage.setItem('namaPeserta', namaInput.value.trim());
+                window.location.href = "menu_ujian.html";
+            } else {
+                errorMessage.style.display = "block";
+                if (namaInput.value.trim() === "") {
+                    namaInput.placeholder = "Nama harus diisi!";
+                } else {
+                    namaInput.placeholder = "Masukkan nama Anda";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

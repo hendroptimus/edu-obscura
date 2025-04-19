@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOAL UTS PENGELOLAAN MICE KELAS XI ULW 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        h2 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .quiz-container {
+            position: relative;
+            min-height: 400px;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .question {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background-color: #e9ecef;
+        }
+
+        .option.selected {
+            border-color: var(--accent);
+            background-color: rgba(72, 149, 239, 0.1);
+        }
+
+        .option input {
+            margin-right: 1rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-menu {
+            background-color: var(--warning);
+            color: white;
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            text-decoration: none;
+        }
+
+        .btn-menu:hover {
+            background-color: #d91a6d;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            height: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: var(--border-radius);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-counter {
+            text-align: right;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .thank-you {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .thank-you h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .thank-you p {
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+            }
+            
+            .question {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>SOAL UTS PENGELOLAAN MICE KELAS XI ULW 1</h1>
+            
+            <div id="start-screen">
+                <div class="form-group">
+                    <label for="participant">Pilih Nama Peserta:</label>
+                    <select id="participant" required>
+                        <option value="" disabled selected>-- Pilih Nama --</option>
+                        <option value="">-- Pilih Nama --</option>
+                        <option value="ALIF FAOZIN">ALIF FAOZIN</option>
+                        <option value="ANDY LIE NARDY">ANDY LIE NARDY</option>
+                        <option value="APRILIA PUTRI HALIM">APRILIA PUTRI HALIM</option>
+                        <option value="AULIA SEPTIA AZZAHRAH RAMADHANI">AULIA SEPTIA AZZAHRAH RAMADHANI</option>
+                        <option value="BEREKHYA WILLSE PETRUCCI">BEREKHYA WILLSE PETRUCCI</option>
+                        <option value="CHIESSA RAMADHAN AULI">CHIESSA RAMADHAN AULI</option>
+                        <option value="DHEA SHARAPOVA">DHEA SHARAPOVA</option>
+                        <option value="DIKA PRATAMA">DIKA PRATAMA</option>
+                        <option value="DIMAS SUSANTO">DIMAS SUSANTO</option>
+                        <option value="EUGENIA VALENDRIANI WONGSO">EUGENIA VALENDRIANI WONGSO</option>
+                        <option value="GABRIEL ABDILLAH">GABRIEL ABDILLAH</option>
+                        <option value="HUTARI AWADINA">HUTARI AWADINA</option>
+                        <option value="IBAM ADITHYA">IBAM ADITHYA</option>
+                        <option value="IHSAN">IHSAN</option>
+                        <option value="IRA SENHA">IRA SENHA</option>
+                        <option value="IRZA GUNAWAN">IRZA GUNAWAN</option>
+                        <option value="JESSELYN PRISCELLA">JESSELYN PRISCELLA</option>
+                        <option value="KALORIN">KALORIN</option>
+                        <option value="KEISYA RASTIARA KIRANA">KEISYA RASTIARA KIRANA</option>
+                        <option value="LADIES SALSABILAH">LADIES SALSABILAH</option>
+                        <option value="LILIAN">LILIAN</option>
+                        <option value="MARCHEL SAPUTRA JAYA">MARCHEL SAPUTRA JAYA</option>
+                        <option value="MUFTHI ZASKIA HASIBUAN">MUFTHI ZASKIA HASIBUAN</option>
+                        <option value="NABIL FEBRYATAMA">NABIL FEBRYATAMA</option>
+                        <option value="PINA PUSPITA">PINA PUSPITA</option>
+                        <option value="REHAN">REHAN</option>
+                        <option value="RIZAL">RIZAL</option>
+                        <option value="RIZKY PAMUNGKAS">RIZKY PAMUNGKAS</option>
+                        <option value="SYINDI">SYINDI</option>
+                        <option value="VIKI SRICAHYANTI">VIKI SRICAHYANTI</option>
+                        <option value="VISYA INDRIANI">VISYA INDRIANI</option>
+                        <option value="WITRA">WITRA</option>
+                        <option value="ZHAVINA CHAILA AL ZAHRA">ZHAVINA CHAILA AL ZAHRA</option>
+                        <option value="ZIDAN RIZQULLAH PITOYO">ZIDAN RIZQULLAH PITOYO</option>
+                    </select>
+                </div>
+                
+                <button id="start-btn" class="btn btn-primary">Mulai Kuis</button>
+                <a href="menu_ujian.html" class="btn btn-menu">Kembali ke Menu</a>
+            </div>
+            
+            <div id="quiz-container" class="quiz-container hidden">
+                <div class="question-counter">
+                    Pertanyaan <span id="current-question">1</span> dari <span id="total-questions">25</span>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                
+                <div id="slides-container">
+                    <!-- Slides will be inserted here by JavaScript -->
+                </div>
+                
+                <div class="navigation">
+                    <button id="prev-btn" class="btn btn-secondary" disabled>Sebelumnya</button>
+                    <button id="next-btn" class="btn btn-primary">Selanjutnya</button>
+                </div>
+            </div>
+            
+            <div id="thank-you" class="thank-you hidden">
+                <h2>Terima Kasih!</h2>
+                <p>Anda telah menyelesaikan kuis MICE Pariwisata.</p>
+                <p>Jawaban Anda telah tersimpan.</p>
+                <a href="menu_ujian.html" class="btn btn-primary">Kembali ke Menu</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions data
+        const questions = [
+            {
+                question: "Apa kepanjangan dari MICE dalam industri pariwisata?",
+                options: [
+                    "Meeting, Incentive, Culture, Event",
+                    "Meeting, Incentive, Convention, Exhibition",
+                    "Management, Incentive, Conference, Exhibition",
+                    "Management, Innovation, Convention, Event"
+                ],
+                answer: 1
+            },
+            {
+                question: "Berikut ini yang termasuk dalam jenis kegiatan MICE adalah...",
+                options: [
+                    "Wisata bahari",
+                    "Kegiatan outbound",
+                    "Pameran dagang",
+                    "Study tour"
+                ],
+                answer: 2
+            },
+            {
+                question: "Kegiatan yang bertujuan memberikan penghargaan atas prestasi karyawan disebut...",
+                options: [
+                    "Meeting",
+                    "Convention",
+                    "Exhibition",
+                    "Incentive"
+                ],
+                answer: 3
+            },
+            {
+                question: "Kegiatan MICE biasanya melibatkan peserta dalam jumlah...",
+                options: [
+                    "Sedikit",
+                    "Sedang",
+                    "Banyak",
+                    "Berdasarkan event"
+                ],
+                answer: 2
+            },
+            {
+                question: "Salah satu karakteristik kegiatan MICE adalah...",
+                options: [
+                    "Dilaksanakan di tempat wisata saja",
+                    "Bersifat pribadi dan menjaga privasi",
+                    "Memerlukan perencanaan dan organisasi yang baik",
+                    "Jadwal yang baik disusun pada hari H"
+                ],
+                answer: 2
+            },
+            {
+                question: "Kegiatan MICE mampu meningkatkan...",
+                options: [
+                    "Angka kunjungan wisatawan",
+                    "Presentase Konsumsi makanan ringan",
+                    "Harga sewa gedung",
+                    "Permintaan transportasi umum"
+                ],
+                answer: 0
+            },
+            {
+                question: "Salah satu manfaat kegiatan MICE bagi perekonomian lokal adalah...",
+                options: [
+                    "Menurunkan tingkat hunian hotel",
+                    "Meningkatkan pendapatan pelaku UMKM",
+                    "Mengurangi beban kegiatan promosi daerah",
+                    "Meningkatkan arus kunjungan pada transportasi pesawat terbang"
+                ],
+                answer: 1
+            },
+            {
+                question: "Kegiatan pameran berskala nasional dapat berdampak pada...",
+                options: [
+                    "jumlah wisatawan yang berpotensi menurun jika dilakukan pada hari kerja",
+                    "Berdampak pengangguran",
+                    "Peningkatan penggunaan ruang publik",
+                    "Promosi destinasi wisata daerah"
+                ],
+                answer: 3
+            },
+            {
+                question: "MICE disebut sebagai sektor strategis karena...",
+                options: [
+                    "Tidak membutuhkan banyak tenaga kerja",
+                    "Hanya digelar setahun sekali",
+                    "Memberikan dampak ekonomi multipel",
+                    "Tidak membutuhkan promosi berlipat"
+                ],
+                answer: 2
+            },
+            {
+                question: "Salah satu contoh nyata kegiatan MICE di Indonesia adalah...",
+                options: [
+                    "Kegiatan panen raya",
+                    "Festival panjat pinang",
+                    "Pameran pariwisata internasional",
+                    "Acara ulang tahun pimpinan daerah"
+                ],
+                answer: 2
+            },
+            {
+                question: "Tahapan pertama dalam menyelenggarakan kegiatan MICE adalah...",
+                options: [
+                    "Evaluasi",
+                    "Pelaksanaan",
+                    "Perencanaan",
+                    "Registrasi"
+                ],
+                answer: 2
+            },
+            {
+                question: "Menyusun jadwal, menentukan lokasi, dan menghubungi narasumber dilakukan pada tahap...",
+                options: [
+                    "Evaluasi",
+                    "Pelaksanaan",
+                    "Perencanaan",
+                    "Laporan"
+                ],
+                answer: 2
+            },
+            {
+                question: "Pengaturan teknis acara, registrasi peserta, dan konsumsi termasuk dalam tahap...",
+                options: [
+                    "Perencanaan",
+                    "Evaluasi",
+                    "Penutupan",
+                    "Pelaksanaan"
+                ],
+                answer: 3
+            },
+            {
+                question: "Penilaian terhadap hasil kegiatan dan laporan akhir dilakukan dalam tahap...",
+                options: [
+                    "Pelaksanaan",
+                    "Evaluasi",
+                    "Rencana cadangan",
+                    "Koordinasi"
+                ],
+                answer: 1
+            },
+            {
+                question: "Tujuan dari evaluasi dalam kegiatan MICE adalah...",
+                options: [
+                    "Menilai kelebihan dan kekurangan",
+                    "Menambah biaya kegiatan",
+                    "Menghentikan kegiatan",
+                    "Mengganti panitia"
+                ],
+                answer: 0
+            },
+            {
+                question: "Tugas utama sekretariat dalam kegiatan MICE adalah...",
+                options: [
+                    "Menyediakan konsumsi",
+                    "Menangani surat menyurat dan administrasi",
+                    "Menyusun dekorasi",
+                    "Mempromosikan acara"
+                ],
+                answer: 1
+            },
+            {
+                question: "Bagian humas memiliki peran utama dalam...",
+                options: [
+                    "Menyiapkan ruang makan",
+                    "Mengatur akomodasi",
+                    "Menjalin komunikasi dengan media dan peserta",
+                    "Menyiapkan anggaran"
+                ],
+                answer: 2
+            },
+            {
+                question: "Bagian konsumsi bertanggung jawab atas...",
+                options: [
+                    "Pendaftaran peserta",
+                    "Penyediaan makanan dan minuman",
+                    "Pengaturan ruangan",
+                    "Pembuatan sertifikat"
+                ],
+                answer: 1
+            },
+            {
+                question: "Tugas dokumentasi dalam MICE adalah...",
+                options: [
+                    "Mengatur sistem keamanan",
+                    "Menyimpan dan mengolah data visual kegiatan",
+                    "Mengatur kendaraan",
+                    "Menyusun jadwal MC"
+                ],
+                answer: 1
+            },
+            {
+                question: "Transportasi dalam kegiatan MICE bertanggung jawab atas...",
+                options: [
+                    "Penerimaan tamu",
+                    "Pengaturan kendaraan panitia dan peserta",
+                    "Registrasi peserta",
+                    "Penerbitan sertifikat"
+                ],
+                answer: 1
+            },
+            {
+                question: "Proposal kegiatan MICE umumnya tidak memuat...",
+                options: [
+                    "Tujuan kegiatan",
+                    "Daftar undangan pribadi",
+                    "Susunan panitia",
+                    "Anggaran biaya"
+                ],
+                answer: 1
+            },
+            {
+                question: "Fungsi utama proposal kegiatan adalah...",
+                options: [
+                    "Menjadi panduan kegiatan dan bahan pengajuan dana",
+                    "Dokumentasi pribadi",
+                    "Sarana mencari uang bagi panitia",
+                    "Alat promosi sponsor"
+                ],
+                answer: 0
+            },
+            {
+                question: "Anggaran biaya dalam proposal disusun untuk...",
+                options: [
+                    "Membuat laporan pribadi",
+                    "Meningkatkan jumlah peserta",
+                    "Mengetahui jumlah kebutuhan anggaran pengeluaran dan pemasukan",
+                    "Menarik tamu undangan"
+                ],
+                answer: 2
+            },
+            {
+                question: "Format RAB yang baik harus memuat hal dibawah ini kecuali …",
+                options: [
+                    "Nama satuan & jumlah satuan",
+                    "Nama lengkap keseluruhan panitia",
+                    "Total biaya pengeluaran",
+                    "Total sub biaya satuan"
+                ],
+                answer: 1
+            },
+            {
+                question: "Berikut ini yang termasuk dalam komponen RAB adalah...",
+                options: [
+                    "Deskripsi narasumber",
+                    "Jumlah ruangan",
+                    "Biaya konsumsi, transportasi, dan dokumentasi",
+                    "Daftar undangan VIP"
+                ],
+                answer: 2
+            }
+        ];
+
+        // DOM Elements
+        const startScreen = document.getElementById('start-screen');
+        const quizContainer = document.getElementById('quiz-container');
+        const thankYouScreen = document.getElementById('thank-you');
+        const startBtn = document.getElementById('start-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const slidesContainer = document.getElementById('slides-container');
+        const currentQuestionEl = document.getElementById('current-question');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const participantSelect = document.getElementById('participant');
+
+        // Quiz state
+        let currentSlide = 0;
+        let answers = new Array(questions.length).fill(null);
+        let participantName = '';
+
+        // Initialize the quiz
+        function initQuiz() {
+            participantName = participantSelect.value;
+            if (!participantName) {
+                alert('Silakan pilih nama peserta terlebih dahulu!');
+                return;
+            }
+
+            startScreen.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            
+            // Set total questions
+            totalQuestionsEl.textContent = questions.length;
+            
+            // Create slides
+            questions.forEach((question, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                slide.id = `slide-${index}`;
+                
+                const questionEl = document.createElement('div');
+                questionEl.className = 'question';
+                questionEl.textContent = question.question;
+                
+                const optionsEl = document.createElement('div');
+                optionsEl.className = 'options';
+                
+                question.options.forEach((option, optionIndex) => {
+                    const optionEl = document.createElement('div');
+                    optionEl.className = 'option';
+                    if (answers[index] === optionIndex) {
+                        optionEl.classList.add('selected');
+                    }
+                    
+                    optionEl.innerHTML = `
+                        <input type="radio" name="question-${index}" id="q${index}-o${optionIndex}" value="${optionIndex}" 
+                            ${answers[index] === optionIndex ? 'checked' : ''}>
+                        <label for="q${index}-o${optionIndex}">${option}</label>
+                    `;
+                    
+                    optionEl.addEventListener('click', () => {
+                        selectAnswer(index, optionIndex);
+                    });
+                    
+                    optionsEl.appendChild(optionEl);
+                });
+                
+                slide.appendChild(questionEl);
+                slide.appendChild(optionsEl);
+                slidesContainer.appendChild(slide);
+            });
+            
+            // Show first slide
+            showSlide(0);
+        }
+
+        // Show a specific slide
+        function showSlide(index) {
+            // Hide all slides
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Show the selected slide
+            document.getElementById(`slide-${index}`).classList.add('active');
+            
+            // Update navigation buttons
+            prevBtn.disabled = index === 0;
+            nextBtn.textContent = index === questions.length - 1 ? 'Selesai' : 'Selanjutnya';
+            
+            // Update question counter
+            currentQuestionEl.textContent = index + 1;
+            
+            // Update progress bar
+            const progress = ((index + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            currentSlide = index;
+        }
+
+        // Select an answer
+        function selectAnswer(questionIndex, answerIndex) {
+            answers[questionIndex] = answerIndex;
+            
+            // Update the selected option UI
+            const options = document.querySelectorAll(`#slide-${questionIndex} .option`);
+            options.forEach((option, index) => {
+                if (index === answerIndex) {
+                    option.classList.add('selected');
+                    option.querySelector('input').checked = true;
+                } else {
+                    option.classList.remove('selected');
+                    option.querySelector('input').checked = false;
+                }
+            });
+        }
+
+        // Submit answers to Google Sheets
+        async function submitAnswers() {
+            // Calculate score (4 points per correct answer)
+            let score = 0;
+            answers.forEach((answer, index) => {
+                if (answer === questions[index].answer) {
+                    score += 4;
+                }
+            });
+            
+            const data = {
+                participant: participantName,
+                answers: answers.join(','),
+                score: score,
+                timestamp: new Date().toISOString()
+            };
+            
+            try {
+                // Send data to Google Apps Script
+                const response = await fetch('https://script.google.com/macros/s/AKfycbx4W6y3QgP7xQ4wGgULdBR1B7gUMpuMt78y0-MpdcEBaGyBs_0OoyDIKdxMJNsXeQI6uw/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                console.log('Data submitted successfully');
+            } catch (error) {
+                console.error('Error submitting data:', error);
+            }
+            
+            // Show thank you screen
+            quizContainer.classList.add('hidden');
+            thankYouScreen.classList.remove('hidden');
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', initQuiz);
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < questions.length - 1) {
+                showSlide(currentSlide + 1);
+            } else {
+                submitAnswers();
+            }
+        });
+    </script>
+</body>
+</html>

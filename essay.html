@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Essay MICE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .participant-section {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        select, textarea {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+        }
+        select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .question-container {
+            background-color: #f8f9fa;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .question {
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .question-number {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        #prevBtn {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        #prevBtn:hover {
+            background-color: #d0d0d0;
+        }
+        #nextBtn, #submitBtn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        #nextBtn:hover, #submitBtn:hover {
+            background-color: #27ae60;
+        }
+        #menuBtn {
+            background-color: #3498db;
+            color: white;
+        }
+        #menuBtn:hover {
+            background-color: #2980b9;
+        }
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            height: 10px;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #3498db;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .hidden {
+            display: none;
+        }
+        .confirmation-container {
+            text-align: center;
+            padding: 30px;
+        }
+        .confirmation-icon {
+            font-size: 60px;
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kuis Essay MICE</h1>
+        
+        <div class="participant-section">
+            <label for="participant">Pilih Nama Peserta:</label>
+            <select id="participant">
+                <option value="">-- Pilih Nama --</option>
+                <option value="ALIF FAOZIN">ALIF FAOZIN</option>
+                <option value="ANDY LIE NARDY">ANDY LIE NARDY</option>
+                <option value="APRILIA PUTRI HALIM">APRILIA PUTRI HALIM</option>
+                <option value="AULIA SEPTIA AZZAHRAH RAMADHANI">AULIA SEPTIA AZZAHRAH RAMADHANI</option>
+                <option value="BEREKHYA WILLSE PETRUCCI">BEREKHYA WILLSE PETRUCCI</option>
+                <option value="CHIESSA RAMADHAN AULI">CHIESSA RAMADHAN AULI</option>
+                <option value="DHEA SHARAPOVA">DHEA SHARAPOVA</option>
+                <option value="DIKA PRATAMA">DIKA PRATAMA</option>
+                <option value="DIMAS SUSANTO">DIMAS SUSANTO</option>
+                <option value="EUGENIA VALENDRIANI WONGSO">EUGENIA VALENDRIANI WONGSO</option>
+                <option value="GABRIEL ABDILLAH">GABRIEL ABDILLAH</option>
+                <option value="HUTARI AWADINA">HUTARI AWADINA</option>
+                <option value="IBAM ADITHYA">IBAM ADITHYA</option>
+                <option value="IHSAN">IHSAN</option>
+                <option value="IRA SENHA">IRA SENHA</option>
+                <option value="IRZA GUNAWAN">IRZA GUNAWAN</option>
+                <option value="JESSELYN PRISCELLA">JESSELYN PRISCELLA</option>
+                <option value="KALORIN">KALORIN</option>
+                <option value="KEISYA RASTIARA KIRANA">KEISYA RASTIARA KIRANA</option>
+                <option value="LADIES SALSABILAH">LADIES SALSABILAH</option>
+                <option value="LILIAN">LILIAN</option>
+                <option value="MARCHEL SAPUTRA JAYA">MARCHEL SAPUTRA JAYA</option>
+                <option value="MUFTHI ZASKIA HASIBUAN">MUFTHI ZASKIA HASIBUAN</option>
+                <option value="NABIL FEBRYATAMA">NABIL FEBRYATAMA</option>
+                <option value="PINA PUSPITA">PINA PUSPITA</option>
+                <option value="REHAN">REHAN</option>
+                <option value="RIZAL">RIZAL</option>
+                <option value="RIZKY PAMUNGKAS">RIZKY PAMUNGKAS</option>
+                <option value="SYINDI">SYINDI</option>
+                <option value="VIKI SRICAHYANTI">VIKI SRICAHYANTI</option>
+                <option value="VISYA INDRIANI">VISYA INDRIANI</option>
+                <option value="WITRA">WITRA</option>
+                <option value="ZHAVINA CHAILA AL ZAHRA">ZHAVINA CHAILA AL ZAHRA</option>
+                <option value="ZIDAN RIZQULLAH PITOYO">ZIDAN RIZQULLAH PITOYO</option>
+            </select>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="question-number" id="questionNumber">Pertanyaan 1 dari 4</div>
+        
+        <div id="quizContainer">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="navigation">
+            <button id="menuBtn" onclick="window.location.href='menu_ujian.html'">Kembali ke Menu</button>
+            <div>
+                <button id="prevBtn" disabled>Sebelumnya</button>
+                <button id="nextBtn">Berikutnya</button>
+                <button id="submitBtn" class="hidden">Kirim Jawaban</button>
+            </div>
+        </div>
+        
+        <div id="confirmationContainer" class="confirmation-container hidden">
+            <div class="confirmation-icon">✓</div>
+            <h2>Jawaban Telah Dikirim</h2>
+            <p>Terima kasih telah mengerjakan kuis essay ini. Jawaban Anda telah berhasil disimpan.</p>
+            <button id="menuBtn2" onclick="window.location.href='menu_ujian.html'">Kembali ke Menu</button>
+        </div>
+    </div>
+
+    <script>
+        // Questions data
+        const questions = [
+            {
+                question: "1. (Soal Menghitung – RAB)<br>Sebuah event seminar akan diadakan selama 1 hari dengan rincian kebutuhan sebagai berikut:<br>- Sewa ruangan: Rp2.500.000<br>- Konsumsi untuk 100 orang @Rp35.000<br>- Honorarium narasumber: Rp1.500.000<br>- Biaya dokumentasi: Rp800.000<br>- Profit margin yang diinginkan adalah 30%<br><br>Pertanyaan:<br>Hitunglah total anggaran yang dibutuhkan untuk kegiatan seminar tersebut!",
+                placeholder: "Tuliskan perhitungan dan jawaban akhir Anda di sini..."
+            },
+            {
+                question: "2. (Soal Menghitung – Estimasi Keuntungan Event)<br>Sebuah pameran produk lokal dihadiri oleh 150 pengunjung yang membayar tiket masuk sebesar Rp25.000 per orang. Biaya pelaksanaan pameran adalah Rp2.750.000.<br><br>Pertanyaan:<br>Hitunglah berapa pendapatan kotor dan keuntungan bersih dari kegiatan tersebut!",
+                placeholder: "Tuliskan perhitungan dan jawaban akhir Anda di sini..."
+            },
+            {
+                question: "3. (Membuat Konsep Proposal Event)<br>Kamu diminta menyusun konsep dasar proposal kegiatan MICE dalam bentuk Incentive Trip bagi karyawan terbaik perusahaan ke destinasi wisata lokal selama 2 hari 1 malam.<br><br>Pertanyaan:<br>Tuliskan konsep proposal kegiatan tersebut, dengan mencantumkan:<br>- Nama kegiatan<br>- Tujuan<br>- Waktu dan tempat<br>- Peserta<br>- Gambaran umum kegiatan",
+                placeholder: "Tuliskan konsep proposal Anda di sini..."
+            },
+            {
+                question: "4. (Soal Kasus – Penanganan Masalah dalam MICE)<br>Kasus:<br>Saat pelaksanaan kegiatan pameran, panitia bagian transportasi terlambat menjemput narasumber dari bandara. Hal ini menyebabkan jadwal pembukaan kegiatan mundur selama 45 menit dan peserta mulai resah.<br><br>Pertanyaan:<br>Menurut pendapatmu, bagaimana seharusnya panitia menangani masalah tersebut secara profesional? Apa langkah evaluasi yang dapat dilakukan untuk menghindari kejadian serupa di masa depan?",
+                placeholder: "Tuliskan solusi dan langkah evaluasi Anda di sini..."
+            }
+        ];
+
+        // Variables
+        let currentQuestion = 0;
+        let answers = Array(questions.length).fill("");
+        let quizStarted = false;
+
+        // DOM Elements
+        const quizContainer = document.getElementById('quizContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressBar = document.getElementById('progressBar');
+        const questionNumber = document.getElementById('questionNumber');
+        const confirmationContainer = document.getElementById('confirmationContainer');
+        const participantSelect = document.getElementById('participant');
+
+        // Initialize quiz
+        function initQuiz() {
+            renderQuestion();
+            updateProgressBar();
+            updateQuestionNumber();
+        }
+
+        // Render current question
+        function renderQuestion() {
+            const question = questions[currentQuestion];
+            
+            quizContainer.innerHTML = `
+                <div class="question-container">
+                    <div class="question">${question.question}</div>
+                    <textarea id="answerInput" placeholder="${question.placeholder}">${answers[currentQuestion]}</textarea>
+                </div>
+            `;
+            
+            // Add event listener to textarea
+            document.getElementById('answerInput').addEventListener('input', function() {
+                answers[currentQuestion] = this.value;
+            });
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Update question number
+        function updateQuestionNumber() {
+            questionNumber.textContent = `Pertanyaan ${currentQuestion + 1} dari ${questions.length}`;
+        }
+
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+                updateProgressBar();
+                updateQuestionNumber();
+                nextBtn.textContent = 'Berikutnya';
+                submitBtn.classList.add('hidden');
+                
+                if (currentQuestion === 0) {
+                    prevBtn.disabled = true;
+                }
+            }
+        }
+
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+                updateProgressBar();
+                updateQuestionNumber();
+                prevBtn.disabled = false;
+                
+                if (currentQuestion === questions.length - 1) {
+                    nextBtn.textContent = 'Tinjau Jawaban';
+                    submitBtn.classList.remove('hidden');
+                }
+            } else {
+                submitAnswers();
+            }
+        }
+
+        // Submit answers
+        function submitAnswers() {
+            // Hide quiz and show confirmation
+            quizContainer.classList.add('hidden');
+            document.querySelector('.progress-container').classList.add('hidden');
+            document.querySelector('.question-number').classList.add('hidden');
+            document.querySelector('.navigation').classList.add('hidden');
+            confirmationContainer.classList.remove('hidden');
+            
+            // Send data to Google Sheet
+            sendDataToGoogleSheet();
+        }
+
+        // Send data to Google Sheet
+        function sendDataToGoogleSheet() {
+            const participantName = participantSelect.value || 'Anonim';
+            const timestamp = new Date().toLocaleString();
+            
+            // Prepare data
+            const formData = {
+                nama: participantName,
+                timestamp: timestamp,
+                jawaban1: answers[0],
+                jawaban2: answers[1],
+                jawaban3: answers[2],
+                jawaban4: answers[3]
+            };
+            
+            // Send data using Google Apps Script Web App
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxbpg2uVT79_EYBR2ukZqX5p_rgQgv7kKMEgf6iJ_n-WO2soLZGbUzME61IQKkNbVHA/exec';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Event listeners
+        prevBtn.addEventListener('click', prevQuestion);
+        nextBtn.addEventListener('click', nextQuestion);
+        submitBtn.addEventListener('click', submitAnswers);
+
+        // Start quiz when participant is selected
+        participantSelect.addEventListener('change', function() {
+            if (this.value && !quizStarted) {
+                quizStarted = true;
+                initQuiz();
+            }
+        });
+    </script>
+</body>
+</html>

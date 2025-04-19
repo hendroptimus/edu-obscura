@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis MICE</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .participant-select {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        .slide {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .question {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        
+        .answer-input:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: var(--light);
+            color: var(--dark);
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            height: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 8px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .menu-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .menu-btn:hover {
+            text-decoration: underline;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--accent);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Kuis MICE</h1>
+        </header>
+        
+        <div class="quiz-container">
+            <div class="participant-select">
+                <label for="participant">Nama Peserta:</label>
+                <select id="participant" required>
+                    <option value="" disabled selected>Pilih nama Anda</option>
+                    <option value="">-- Pilih Nama --</option>
+                    <option value="ALIF FAOZIN">ALIF FAOZIN</option>
+                    <option value="ANDY LIE NARDY">ANDY LIE NARDY</option>
+                    <option value="APRILIA PUTRI HALIM">APRILIA PUTRI HALIM</option>
+                    <option value="AULIA SEPTIA AZZAHRAH RAMADHANI">AULIA SEPTIA AZZAHRAH RAMADHANI</option>
+                    <option value="BEREKHYA WILLSE PETRUCCI">BEREKHYA WILLSE PETRUCCI</option>
+                    <option value="CHIESSA RAMADHAN AULI">CHIESSA RAMADHAN AULI</option>
+                    <option value="DHEA SHARAPOVA">DHEA SHARAPOVA</option>
+                    <option value="DIKA PRATAMA">DIKA PRATAMA</option>
+                    <option value="DIMAS SUSANTO">DIMAS SUSANTO</option>
+                    <option value="EUGENIA VALENDRIANI WONGSO">EUGENIA VALENDRIANI WONGSO</option>
+                    <option value="GABRIEL ABDILLAH">GABRIEL ABDILLAH</option>
+                    <option value="HUTARI AWADINA">HUTARI AWADINA</option>
+                    <option value="IBAM ADITHYA">IBAM ADITHYA</option>
+                    <option value="IHSAN">IHSAN</option>
+                    <option value="IRA SENHA">IRA SENHA</option>
+                    <option value="IRZA GUNAWAN">IRZA GUNAWAN</option>
+                    <option value="JESSELYN PRISCELLA">JESSELYN PRISCELLA</option>
+                    <option value="KALORIN">KALORIN</option>
+                    <option value="KEISYA RASTIARA KIRANA">KEISYA RASTIARA KIRANA</option>
+                    <option value="LADIES SALSABILAH">LADIES SALSABILAH</option>
+                    <option value="LILIAN">LILIAN</option>
+                    <option value="MARCHEL SAPUTRA JAYA">MARCHEL SAPUTRA JAYA</option>
+                    <option value="MUFTHI ZASKIA HASIBUAN">MUFTHI ZASKIA HASIBUAN</option>
+                    <option value="NABIL FEBRYATAMA">NABIL FEBRYATAMA</option>
+                    <option value="PINA PUSPITA">PINA PUSPITA</option>
+                    <option value="REHAN">REHAN</option>
+                    <option value="RIZAL">RIZAL</option>
+                    <option value="RIZKY PAMUNGKAS">RIZKY PAMUNGKAS</option>
+                    <option value="SYINDI">SYINDI</option>
+                    <option value="VIKI SRICAHYANTI">VIKI SRICAHYANTI</option>
+                    <option value="VISYA INDRIANI">VISYA INDRIANI</option>
+                    <option value="WITRA">WITRA</option>
+                    <option value="ZHAVINA CHAILA AL ZAHRA">ZHAVINA CHAILA AL ZAHRA</option>
+                    <option value="ZIDAN RIZQULLAH PITOYO">ZIDAN RIZQULLAH PITOYO</option>
+                </select>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress"></div>
+            </div>
+            <div class="progress-text" id="progress-text">Pertanyaan 1 dari 10</div>
+            
+            <!-- Slide Questions -->
+            <div class="slide active" id="slide1">
+                <div class="question">1. Meeting, Incentive, Convention, dan Exhibition merupakan bentuk-bentuk kegiatan yang termasuk dalam kategori _______________.</div>
+                <input type="text" class="answer-input" id="answer1" placeholder="Masukkan jawaban Anda...">
+            </div>
+            
+            <div class="slide" id="slide2">
+                <div class="question">2. Kegiatan konvensi biasanya melibatkan banyak peserta dan memiliki agenda utama berupa _______________.</div>
+                <input type="text" class="answer-input" id="answer2" placeholder="Masukkan jawaban Anda...">
+            </div>
+            
+            <div class="slide" id="slide3">
+                <div class="question">3. Dalam tahap pelaksanaan, panitia harus memastikan semua kegiatan berjalan sesuai dengan _______________ yang telah disusun sebelumnya.</div>
+                <input type="text" class="answer-input" id="answer3" placeholder="Masukkan jawaban Anda...">
+            </div>
+            
+            <div class="slide" id="slide4">
+                <div class="question">4. Salah satu peran kegiatan MICE dalam industri pariwisata adalah meningkatkan _______________ kamar hotel dan jasa transportasi.</div>
+                <input type="text" class="answer-input" id="answer4" placeholder="Masukkan jawaban Anda...">
+            </div>
+            
+            <div class="slide" id="slide5">
+                <div class="question">5. Kegiatan MICE seringkali mendatangkan wisatawan dalam jumlah besar sehingga berdampak pada peningkatan _______________ daerah.</div>
+                <input type="text" class="answer-input" id="answer5" placeholder="Masukkan jawaban Anda...">
+            </div>
+            
+            <div class="slide" id="slide6">
+                <div class="question">6. Proposal kegiatan MICE biasanya diajukan kepada _______________ untuk mendapatkan izin atau dukungan.</div>
+                <input type="text" class="answer-input" id="answer6" placeholder="Masukkan jawaban Anda...">
+            </div>
+            
+            <div class="slide" id="slide7">
+                <div class="question">7. Biaya konsumsi, transportasi, dan akomodasi biasanya termasuk dalam perhitungan _______________.</div>
+                <input type="text" class="answer-input" id="answer7" placeholder="Masukkan jawaban Anda...">
+            </div>
+            
+            <div class="slide" id="slide8">
+                <div class="question">8. Bagian humas bertanggung jawab membangun komunikasi antara panitia dengan pihak luar, termasuk media dan _______________.</div>
+                <input type="text" class="answer-input" id="answer8" placeholder="Masukkan jawaban Anda...">
+            </div>
+            
+            <div class="slide" id="slide9">
+                <div class="question">9. Evaluasi kegiatan MICE dilakukan untuk mengukur keberhasilan dan mengidentifikasi hal-hal yang perlu _______________ di masa depan.</div>
+                <input type="text" class="answer-input" id="answer9" placeholder="Masukkan jawaban Anda...">
+            </div>
+            
+            <div class="slide" id="slide10">
+                <div class="question">10. Salah satu komponen penting dalam perencanaan MICE adalah menentukan _______________ kegiatan dan kebutuhan logistik.</div>
+                <input type="text" class="answer-input" id="answer10" placeholder="Masukkan jawaban Anda...">
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prev-btn" disabled>Sebelumnya</button>
+                <button class="btn btn-primary" id="next-btn">Selanjutnya</button>
+            </div>
+            
+            <div class="submit-container">
+                <button class="btn btn-danger" id="submit-btn" style="display: none;">Kirim Jawaban</button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                Mengirim jawaban...
+            </div>
+            
+            <div class="success-message" id="success-message">
+                <h3>Jawaban berhasil dikirim!</h3>
+                <p>Terima kasih telah mengikuti kuis ini.</p>
+            </div>
+        </div>
+        
+        <a href="menu_ujian.html" class="menu-btn">Kembali ke Menu Ujian</a>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const progressBar = document.getElementById('progress');
+            const progressText = document.getElementById('progress-text');
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('success-message');
+            
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+            
+            // Update progress bar
+            function updateProgress() {
+                const progress = ((currentSlide + 1) / totalSlides) * 100;
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `Pertanyaan ${currentSlide + 1} dari ${totalSlides}`;
+                
+                // Show/hide buttons
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.style.display = currentSlide === totalSlides - 1 ? 'none' : 'block';
+                submitBtn.style.display = currentSlide === totalSlides - 1 ? 'block' : 'none';
+            }
+            
+            // Show current slide
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                currentSlide = index;
+                updateProgress();
+            }
+            
+            // Next button click
+            nextBtn.addEventListener('click', function() {
+                if (currentSlide < totalSlides - 1) {
+                    showSlide(currentSlide + 1);
+                }
+            });
+            
+            // Previous button click
+            prevBtn.addEventListener('click', function() {
+                if (currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                }
+            });
+            
+            // Submit button click
+            submitBtn.addEventListener('click', function() {
+                const participant = document.getElementById('participant').value;
+                
+                if (!participant) {
+                    alert('Silakan pilih nama peserta terlebih dahulu!');
+                    return;
+                }
+                
+                // Collect all answers
+                const answers = [];
+                for (let i = 1; i <= totalSlides; i++) {
+                    answers.push(document.getElementById(`answer${i}`).value);
+                }
+                
+                // Check if all questions are answered
+                if (answers.some(answer => !answer.trim())) {
+                    if (!confirm('Beberapa pertanyaan belum dijawab. Yakin ingin mengirim?')) {
+                        return;
+                    }
+                }
+                
+                // Show loading
+                submitBtn.style.display = 'none';
+                loading.style.display = 'block';
+                
+                // Prepare data to send
+                const data = {
+                    participant: participant,
+                    timestamp: new Date().toLocaleString(),
+                    answers: answers
+                };
+                
+                // Send data to Google Sheets
+                fetch('https://script.google.com/macros/s/AKfycbyl5iJLsYSSjQDwMSrzBAP7NA_-kWOguszPJe8rsOtNgBArD02me0m33QWcopm_WMwEjA/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(() => {
+                    loading.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    document.querySelector('.quiz-container').style.opacity = '0.6';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    loading.style.display = 'none';
+                    submitBtn.style.display = 'block';
+                    alert('Terjadi kesalahan saat mengirim jawaban. Silakan coba lagi.');
+                });
+            });
+            
+            // Initialize
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
