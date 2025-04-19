@@ -1,1 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Multiple Choice Quiz</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --danger: #f72585;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quiz-header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .participant-select {
+            margin-top: 15px;
+        }
+        
+        select {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .question-slide {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .question-slide.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .question-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .option {
+            padding: 12px 15px;
+            background-color: var(--light);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            background-color: #e9ecef;
+        }
+        
+        .option.selected {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #3aa8d4;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: var(--primary);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .quiz-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .menu-btn {
+            background-color: var(--dark);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .menu-btn:hover {
+            background-color: #343a40;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .quiz-header {
+                padding: 15px;
+            }
+            
+            .quiz-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quiz-header">
+            <h1>English Multiple Choice Quiz</h1>
+            <div class="participant-select">
+                <select id="participant">
+                    <option value="">-- Select Your Name --</option>
+                    <option value="Student 1">Student 1</option>
+                    <option value="Student 2">Student 2</option>
+                    <option value="Student 3">Student 3</option>
+                    <option value="Student 4">Student 4</option>
+                    <option value="Student 5">Student 5</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <!-- Question slides will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="quiz-footer">
+            <a href="pilihan_ganda_inggris.html" class="menu-btn">Back to Menu</a>
+        </div>
+    </div>
 
+    <script>
+        // Quiz questions data
+        const questions = [
+            {
+                question: "1. Last weekend, we ___ to Borobudur Temple with our classmates.",
+                options: ["A. go", "B. goes", "C. went", "D. gone"],
+                correctAnswer: 2
+            },
+            {
+                question: "2. The tour guide ___ us about the history of the monument.",
+                options: ["A. tells", "B. told", "C. telling", "D. tell"],
+                correctAnswer: 1
+            },
+            {
+                question: "3. After visiting the museum, we ___ lunch at a local restaurant.",
+                options: ["A. eat", "B. ate", "C. eaten", "D. eats"],
+                correctAnswer: 1
+            },
+            {
+                question: "4. Tourist: Where did you go yesterday? Guide: We ___ to Tanjung Tinggi Beach.",
+                options: ["A. go", "B. gone", "C. went", "D. going"],
+                correctAnswer: 2
+            },
+            {
+                question: "5. Tourist: Did you enjoy the trip? Traveler: Yes! I really ___ the boat tour around the island.",
+                options: ["A. enjoy", "B. enjoyed", "C. enjoying", "D. enjoys"],
+                correctAnswer: 1
+            },
+            {
+                question: "6. Tourist: What time did the show start? Staff: It ___ at 7 PM.",
+                options: ["A. starts", "B. starting", "C. start", "D. started"],
+                correctAnswer: 3
+            },
+            {
+                question: "7. He helps tourists during their trip and explains about tourist destinations. What is his job?",
+                options: ["A. Tour guide", "B. Chef", "C. Pilot", "D. Bellboy"],
+                correctAnswer: 0
+            },
+            {
+                question: "8. She serves food and drinks in a restaurant. Who is she?",
+                options: ["A. Driver", "B. Waitress", "C. Receptionist", "D. Manager"],
+                correctAnswer: 1
+            },
+            {
+                question: "9. He flies an airplane. What is his profession?",
+                options: ["A. Sailor", "B. Mechanic", "C. Pilot", "D. Travel agent"],
+                correctAnswer: 2
+            },
+            {
+                question: "10. What does a receptionist do?",
+                options: [
+                    "A. Welcome guests and answer phone calls",
+                    "B. Serve food",
+                    "C. Clean the room",
+                    "D. Fly a plane"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "11. What does a tour guide do?",
+                options: [
+                    "A. Drive the bus",
+                    "B. Guide and give information to tourists",
+                    "C. Cook meals in the kitchen",
+                    "D. Clean the hotel rooms"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "12. What does a housekeeper do?",
+                options: [
+                    "A. Manage the hotel",
+                    "B. Plan tour packages",
+                    "C. Clean rooms and make beds",
+                    "D. Sell flight tickets"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "13. What does a travel agent do?",
+                options: [
+                    "A. Take photos of tourists",
+                    "B. Provide tour and ticketing services",
+                    "C. Fly the airplane",
+                    "D. Guard the museum"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "14. The tourists got wet because they didn't bring an umbrella. What is the cause?",
+                options: [
+                    "A. The weather was sunny",
+                    "B. The tourists brought umbrellas",
+                    "C. It was rainy",
+                    "D. They stayed in the hotel"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "15. The flight was delayed because of bad weather. What is the cause?",
+                options: [
+                    "A. The machine had a trouble",
+                    "B. It was strong wind and cloudy",
+                    "C. The airport was empty",
+                    "D. The pilot arrived late"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "16. The guide arrived late, so the tour started at 10 AM. What is the effect?",
+                options: [
+                    "A. The guide was early",
+                    "B. The weather so bad",
+                    "C. The tourists canceled the tour",
+                    "D. The trip was on schedule"
+                ],
+                correctAnswer: 3
+            },
+            {
+                question: "17. The museum was closed, so the tourists visited the beach instead. What does it mean?",
+                options: [
+                    "A. The visiting schedule was changed",
+                    "B. The tourists stayed in the hotel",
+                    "C. The museum was very crowded",
+                    "D. The guide rejected to visit the museum"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "18. What is the function of a hotel voucher in a pick-up service?",
+                options: [
+                    "A. To confirm the guest's reservation and room",
+                    "B. To book the flight",
+                    "C. To carry the guest's luggage",
+                    "D. To show the guest's identity"
+                ],
+                correctAnswer: 0
+            },
+            {
+                question: "19. The driver held a signboard with the guest's name. What is the signboard for?",
+                options: [
+                    "A. To carry luggage",
+                    "B. To show the guest's name",
+                    "C. To protect the guest",
+                    "D. To book the hotel"
+                ],
+                correctAnswer: 1
+            },
+            {
+                question: "20. The guest used a trolley at the airport. What is the function of a trolley?",
+                options: [
+                    "A. To check tickets",
+                    "B. To show guest identity",
+                    "C. To carry luggage easily",
+                    "D. To book flights"
+                ],
+                correctAnswer: 2
+            },
+            {
+                question: "21. A uniform helps the guest identify the staff. What is the function of a uniform in pick-up service?",
+                options: [
+                    "A. To help guests carry their bags",
+                    "B. To show staff professionalism and identity",
+                    "C. To clean the car",
+                    "D. To book the guest's ticket"
+                ],
+                correctAnswer: 1
+            }
+        ];
+
+        // Quiz state
+        let currentQuestion = 0;
+        let answers = new Array(questions.length).fill(null);
+        let participantName = "";
+        
+        // DOM elements
+        const quizContainer = document.querySelector('.quiz-container');
+        const progressBar = document.getElementById('progress');
+        const participantSelect = document.getElementById('participant');
+        
+        // Initialize the quiz
+        function initQuiz() {
+            // Create question slides
+            questions.forEach((q, index) => {
+                const questionSlide = document.createElement('div');
+                questionSlide.className = 'question-slide';
+                if (index === 0) questionSlide.classList.add('active');
+                
+                questionSlide.innerHTML = `
+                    <div class="question-number">Question ${index + 1} of ${questions.length}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((option, i) => `
+                            <div class="option" data-index="${i}">${option}</div>
+                        `).join('')}
+                    </div>
+                    <div class="navigation">
+                        ${index > 0 ? `<button class="btn-secondary" onclick="prevQuestion()">Previous</button>` : `<div></div>`}
+                        ${index < questions.length - 1 ? `<button class="btn-primary" onclick="nextQuestion()">Next</button>` : `<button class="btn-success" onclick="submitQuiz()">Submit Quiz</button>`}
+                    </div>
+                `;
+                
+                quizContainer.appendChild(questionSlide);
+            });
+            
+            // Add event listeners to options
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.closest('.question-slide').dataset.index);
+                    const optionIndex = parseInt(this.dataset.index);
+                    
+                    // Remove selected class from all options in this question
+                    this.parentNode.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Save answer
+                    answers[questionIndex] = optionIndex;
+                });
+            });
+            
+            // Update progress bar
+            updateProgress();
+            
+            // Participant select change event
+            participantSelect.addEventListener('change', function() {
+                participantName = this.value;
+            });
+        }
+        
+        // Navigate to next question
+        function nextQuestion() {
+            if (answers[currentQuestion] === null) {
+                alert('Please select an answer before proceeding.');
+                return;
+            }
+            
+            document.querySelectorAll('.question-slide')[currentQuestion].classList.remove('active');
+            currentQuestion++;
+            document.querySelectorAll('.question-slide')[currentQuestion].classList.add('active');
+            updateProgress();
+        }
+        
+        // Navigate to previous question
+        function prevQuestion() {
+            document.querySelectorAll('.question-slide')[currentQuestion].classList.remove('active');
+            currentQuestion--;
+            document.querySelectorAll('.question-slide')[currentQuestion].classList.add('active');
+            updateProgress();
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        // Submit quiz
+        function submitQuiz() {
+            if (answers.includes(null)) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+            
+            if (!participantName) {
+                alert('Please select your name before submitting.');
+                return;
+            }
+            
+            // Calculate score (5 points per correct answer)
+            let score = 0;
+            answers.forEach((answer, index) => {
+                if (answer === questions[index].correctAnswer) {
+                    score += 5;
+                }
+            });
+            
+            // Prepare data to send to Google Sheets
+            const quizData = {
+                participant: participantName,
+                answers: answers,
+                score: score,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Send data to Google Sheets
+            sendDataToGoogleSheets(quizData);
+        }
+        
+        // Send data to Google Sheets
+        function sendDataToGoogleSheets(data) {
+            // This URL should be replaced with your Google Apps Script web app URL
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbyB2wFj7zwNQ_NABws75REZLBlxEAtEkkVt7vh2vWBX65IkLKra8w26QOlkbFIB0kRckQ/exec';
+            
+            fetch(scriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                alert(`Quiz submitted successfully! Your score has been recorded.`);
+                // You could redirect or reset the quiz here
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your quiz. Please try again.');
+            });
+        }
+        
+        // Initialize the quiz when the page loads
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>
