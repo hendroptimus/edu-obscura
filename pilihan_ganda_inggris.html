@@ -107,6 +107,8 @@
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
         }
         
         .option:hover {
@@ -117,6 +119,11 @@
             background-color: var(--accent);
             color: white;
             border-color: var(--secondary);
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
         }
         
         .navigation {
@@ -217,40 +224,11 @@
             <div class="participant-select">
                 <select id="participant">
                     <option value="">-- Select Your Name --</option>
-                    <option value="ALIF FAOZIN">ALIF FAOZIN</option>
-                <option value="ANDY LIE NARDY">ANDY LIE NARDY</option>
-                <option value="APRILIA PUTRI HALIM">APRILIA PUTRI HALIM</option>
-                <option value="AULIA SEPTIA AZZAHRAH RAMADHANI">AULIA SEPTIA AZZAHRAH RAMADHANI</option>
-                <option value="BEREKHYA WILLSE PETRUCCI">BEREKHYA WILLSE PETRUCCI</option>
-                <option value="CHIESSA RAMADHAN AULI">CHIESSA RAMADHAN AULI</option>
-                <option value="DHEA SHARAPOVA">DHEA SHARAPOVA</option>
-                <option value="DIKA PRATAMA">DIKA PRATAMA</option>
-                <option value="DIMAS SUSANTO">DIMAS SUSANTO</option>
-                <option value="EUGENIA VALENDRIANI WONGSO">EUGENIA VALENDRIANI WONGSO</option>
-                <option value="GABRIEL ABDILLAH">GABRIEL ABDILLAH</option>
-                <option value="HUTARI AWADINA">HUTARI AWADINA</option>
-                <option value="IBAM ADITHYA">IBAM ADITHYA</option>
-                <option value="IHSAN">IHSAN</option>
-                <option value="IRA SENHA">IRA SENHA</option>
-                <option value="IRZA GUNAWAN">IRZA GUNAWAN</option>
-                <option value="JESSELYN PRISCELLA">JESSELYN PRISCELLA</option>
-                <option value="KALORIN">KALORIN</option>
-                <option value="KEISYA RASTIARA KIRANA">KEISYA RASTIARA KIRANA</option>
-                <option value="LADIES SALSABILAH">LADIES SALSABILAH</option>
-                <option value="LILIAN">LILIAN</option>
-                <option value="MARCHEL SAPUTRA JAYA">MARCHEL SAPUTRA JAYA</option>
-                <option value="MUFTHI ZASKIA HASIBUAN">MUFTHI ZASKIA HASIBUAN</option>
-                <option value="NABIL FEBRYATAMA">NABIL FEBRYATAMA</option>
-                <option value="PINA PUSPITA">PINA PUSPITA</option>
-                <option value="REHAN">REHAN</option>
-                <option value="RIZAL">RIZAL</option>
-                <option value="RIZKY PAMUNGKAS">RIZKY PAMUNGKAS</option>
-                <option value="SYINDI">SYINDI</option>
-                <option value="VIKI SRICAHYANTI">VIKI SRICAHYANTI</option>
-                <option value="VISYA INDRIANI">VISYA INDRIANI</option>
-                <option value="WITRA">WITRA</option>
-                <option value="ZHAVINA CHAILA AL ZAHRA">ZHAVINA CHAILA AL ZAHRA</option>
-                <option value="ZIDAN RIZQULLAH PITOYO">ZIDAN RIZQULLAH PITOYO</option>
+                    <option value="Student 1">Student 1</option>
+                    <option value="Student 2">Student 2</option>
+                    <option value="Student 3">Student 3</option>
+                    <option value="Student 4">Student 4</option>
+                    <option value="Student 5">Student 5</option>
                 </select>
             </div>
         </div>
@@ -454,6 +432,7 @@
             questions.forEach((q, index) => {
                 const questionSlide = document.createElement('div');
                 questionSlide.className = 'question-slide';
+                questionSlide.dataset.index = index;
                 if (index === 0) questionSlide.classList.add('active');
                 
                 questionSlide.innerHTML = `
@@ -461,7 +440,10 @@
                     <div class="question-text">${q.question}</div>
                     <div class="options">
                         ${q.options.map((option, i) => `
-                            <div class="option" data-index="${i}">${option}</div>
+                            <label class="option">
+                                <input type="radio" name="question${index}" value="${i}">
+                                ${option}
+                            </label>
                         `).join('')}
                     </div>
                     <div class="navigation">
@@ -473,22 +455,19 @@
                 quizContainer.appendChild(questionSlide);
             });
             
-            // Add event listeners to options
-            document.querySelectorAll('.option').forEach(option => {
-                option.addEventListener('click', function() {
+            // Add event listeners to radio buttons
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function() {
                     const questionIndex = parseInt(this.closest('.question-slide').dataset.index);
-                    const optionIndex = parseInt(this.dataset.index);
-                    
-                    // Remove selected class from all options in this question
-                    this.parentNode.querySelectorAll('.option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
+                    const optionIndex = parseInt(this.value);
                     
                     // Save answer
                     answers[questionIndex] = optionIndex;
+                    
+                    // Highlight selected option
+                    const options = this.closest('.options').querySelectorAll('.option');
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    this.closest('.option').classList.add('selected');
                 });
             });
             
@@ -530,8 +509,15 @@
         
         // Submit quiz
         function submitQuiz() {
-            if (answers.includes(null)) {
-                alert('Please answer all questions before submitting.');
+            // Check if all questions are answered
+            const unanswered = answers.findIndex(answer => answer === null);
+            if (unanswered !== -1) {
+                alert(`Please answer question ${unanswered + 1} before submitting.`);
+                // Go to the unanswered question
+                document.querySelectorAll('.question-slide')[currentQuestion].classList.remove('active');
+                currentQuestion = unanswered;
+                document.querySelectorAll('.question-slide')[currentQuestion].classList.add('active');
+                updateProgress();
                 return;
             }
             
@@ -556,8 +542,12 @@
                 timestamp: new Date().toISOString()
             };
             
-            // Send data to Google Sheets
-            sendDataToGoogleSheets(quizData);
+            // Show results (for testing, replace with actual Google Sheets submission)
+            alert(`Quiz submitted successfully!\nParticipant: ${participantName}\nScore: ${score}/${questions.length * 5}`);
+            console.log('Data to be sent:', quizData);
+            
+            // Uncomment this to actually send data to Google Sheets
+            // sendDataToGoogleSheets(quizData);
         }
         
         // Send data to Google Sheets
@@ -574,8 +564,7 @@
                 body: JSON.stringify(data)
             })
             .then(() => {
-                alert(`Quiz submitted successfully! Your score has been recorded.`);
-                // You could redirect or reset the quiz here
+                alert(`Quiz submitted successfully! Your score: ${data.score}/${questions.length * 5}`);
             })
             .catch(error => {
                 console.error('Error:', error);
