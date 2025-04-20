@@ -1,1 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Ujian Bahasa Inggris</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
+        .menu-container {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #3498db;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: #db3490;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .menu-item {
+            display: block;
+            width: 90%;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #e0f2f7; /* Light Teal */
+            color: #00897b; /* Teal */
+            font-size: 1.1em;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .menu-item:hover {
+            background-color: #b2ebf2; /* Lighter Teal */
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            color: #00acc1; /* Cyan */
+        }
+
+        .logout-button {
+            background-color: #f44336; /* Red */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 30px;
+        }
+
+        .logout-button:hover {
+            background-color: #d32f2f; /* Darker Red */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="menu-container">
+        <h1>Selamat Datang di Halaman UTS Bahasa Inggris</h1>
+        <h2>Kelas XI ULW 1</h2>
+        <a href="pilihan_ganda_inggris.html" class="menu-item">
+            <i class="fas fa-check-square"></i> Pilihan Ganda
+        </a>
+        <a href="isian_inggris.html" class="menu-item">
+            <i class="fas fa-keyboard"></i> Isian Singkat
+        </a>
+        <a href="essay_inggris.html" class="menu-item">
+            <i class="fas fa-file-alt"></i> Essay
+        </a>
+        <a href="matching_inggris.html" class="menu-item">
+            <i class="fas fa-puzzle-piece"></i> Matching
+        </a>
+        <button class="logout-button" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Keluar
+        </button>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "index.html"; // Kembali ke halaman login
+        }
+
+        // Anda bisa menambahkan script di sini untuk mengambil nama pengguna dari localStorage
+        // dan menampilkannya di halaman menu jika diperlukan.
+        const namaPeserta = localStorage.getItem('namaPeserta');
+        if (namaPeserta) {
+            console.log("Selamat datang, " + namaPeserta + "!");
+            // Anda bisa menambahkan elemen HTML untuk menampilkan nama di halaman ini.
+        } else {
+            // Jika nama tidak ada, mungkin pengguna belum login dengan benar,
+            // arahkan kembali ke halaman login.
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
