@@ -94,6 +94,15 @@
             text-align: center;
             margin-top: 20px;
         }
+        .error-message {
+            display: none;
+            background-color: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -131,17 +140,30 @@
         <div id="successMessage" class="success-message">
             Your answers have been submitted successfully!
         </div>
+        
+        <div id="errorMessage" class="error-message">
+            There was an error submitting your answers. Please try again.
+        </div>
     </div>
 
     <script>
         document.getElementById('essayForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Show loading state
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
             const participant = document.getElementById('participant').value;
             const answer1 = document.getElementById('answer1').value;
             const answer2 = document.getElementById('answer2').value;
             
-            fetch('https://script.google.com/macros/s/AKfycbxWhqP8ofZudh95ho1yxe8MVsjOUj21PJ8vxxGdmzHvgYF9gJXp0O4KRirWZzA_uFfc/exec', {
+            // Replace with your actual web app URL
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbw9pC-TTrMhGOqZosKXPgF_DhHs9OMSmZtlV_63k9Y8z2qKf4YafJjgsd0s7A1tqcQh/exec';
+            
+            fetch(webAppUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -152,18 +174,32 @@
                     answer2: answer2
                 }),
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     document.getElementById('essayForm').reset();
                     document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
                     setTimeout(() => {
                         document.getElementById('successMessage').style.display = 'none';
                     }, 3000);
+                } else {
+                    throw new Error(data.error || 'Unknown error occurred');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+            })
+            .finally(() => {
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
             });
         });
     </script>
