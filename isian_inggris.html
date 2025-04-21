@@ -1,1 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yogyakarta Culture Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .participant-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 30px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .back-button {
+            background-color: #95a5a6;
+            margin-right: 10px;
+        }
+        .back-button:hover {
+            background-color: #7f8c8d;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+        .reading-text {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Cultural Heritage of Yogyakarta</h1>
+        
+        <div class="reading-text">
+            <p>Yogyakarta, often called Jogja, is the cultural heart of Java, Indonesia. It is renowned for its ancient temples, royal traditions, and vibrant arts. The city is home to the Kraton Ngayogyakarta, the palace of the Sultan who still governs the region today. Nearby, the majestic Borobudur and Prambanan temples showcase Indonesia's rich Buddhist and Hindu history.</p>
+            <p>Traditional Javanese arts thrive in Yogyakarta, including wayang kulit (shadow puppetry), gamelan music, and batik textile art. The city celebrates unique traditions like Sekaten, a week-long festival marking the Prophet Muhammad's birthday with night markets and gamelan performances.</p>
+            <p>Yogyakarta's cuisine is equally distinctive, featuring gudeg (young jackfruit stew), bakpia (sweet bean pastry), and angkrung (rice cooked in bamboo). The city's blend of royalty, religion, and artistry makes it a living museum of Javanese culture.</p>
+        </div>
+        
+        <div class="participant-section">
+            <label for="participant">Select your name:</label>
+            <select id="participant" required>
+                <option value="" disabled selected>Pilih nama lengkap</option>
+                <option value="ALIF FAOZIN">ALIF FAOZIN</option>
+                <option value="ANDY LIE NARDY">ANDY LIE NARDY</option>
+                <option value="APRILIA PUTRI HALIM">APRILIA PUTRI HALIM</option>
+                <option value="AULIA SEPTIA AZZAHRAH RAMADHANI">AULIA SEPTIA AZZAHRAH RAMADHANI</option>
+                <option value="BEREKHYA WILLSE PETRUCCI">BEREKHYA WILLSE PETRUCCI</option>
+                <option value="CHIESSA RAMADHAN AULI">CHIESSA RAMADHAN AULI</option>
+                <option value="DHEA SHARAPOVA">DHEA SHARAPOVA</option>
+                <option value="DIKA PRATAMA">DIKA PRATAMA</option>
+                <option value="DIMAS SUSANTO">DIMAS SUSANTO</option>
+                <option value="EUGENIA VALENDRIANI WONGSO">EUGENIA VALENDRIANI WONGSO</option>
+                <option value="GABRIEL ABDILLAH">GABRIEL ABDILLAH</option>
+                <option value="HUTARI AWADINA">HUTARI AWADINA</option>
+                <option value="IBAM ADITHYA">IBAM ADITHYA</option>
+                <option value="IHSAN">IHSAN</option>
+                <option value="IRA SENHA">IRA SENHA</option>
+                <option value="IRZA GUNAWAN">IRZA GUNAWAN</option>
+                <option value="JESSELYN PRISCELLA">JESSELYN PRISCELLA</option>
+                <option value="KALORIN">KALORIN</option>
+                <option value="KEISYA RASTIARA KIRANA">KEISYA RASTIARA KIRANA</option>
+                <option value="LADIES SALSABILAH">LADIES SALSABILAH</option>
+                <option value="LILIAN">LILIAN</option>
+                <option value="MARCHEL SAPUTRA JAYA">MARCHEL SAPUTRA JAYA</option>
+                <option value="MUFTHI ZASKIA HASIBUAN">MUFTHI ZASKIA HASIBUAN</option>
+                <option value="NABIL FEBRYATAMA">NABIL FEBRYATAMA</option>
+                <option value="PINA PUSPITA">PINA PUSPITA</option>
+                <option value="REHAN">REHAN</option>
+                <option value="RIZAL">RIZAL</option>
+                <option value="RIZKY PAMUNGKAS">RIZKY PAMUNGKAS</option>
+                <option value="SYINDI">SYINDI</option>
+                <option value="VIKI SRICAHYANTI">VIKI SRICAHYANTI</option>
+                <option value="VISYA INDRIANI">VISYA INDRIANI</option>
+                <option value="WITRA">WITRA</option>
+                <option value="ZHAVINA CHAILA AL ZAHRA">ZHAVINA CHAILA AL ZAHRA</option>
+                <option value="ZIDAN RIZQULLAH PITOYO">ZIDAN RIZQULLAH PITOYO</option>
+            </select>
+        </div>
+        
+        <form id="quizForm">
+            <div class="question">
+                <div class="question-text">1. Yogyakarta is known as the cultural _____ of Java.</div>
+                <input type="text" name="q1" required>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">2. The Kraton Ngayogyakarta is the palace of the _____.</div>
+                <input type="text" name="q2" required>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">3. _____ and Prambanan are two ancient temples near Yogyakarta.</div>
+                <input type="text" name="q3" required>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">4. Wayang kulit is a traditional Javanese _____ performance.</div>
+                <input type="text" name="q4" required>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">5. The Sekaten festival celebrates the birthday of _____.</div>
+                <input type="text" name="q5" required>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">6. Yogyakarta's famous sweet bean pastry is called _____.</div>
+                <input type="text" name="q6" required>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">7. Gudeg is made from young _____ cooked in coconut milk.</div>
+                <input type="text" name="q7" required>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">8. Batik is a traditional _____ art form from Yogyakarta.</div>
+                <input type="text" name="q8" required>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">9. The Sultan of Yogyakarta still _____ the region today.</div>
+                <input type="text" name="q9" required>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">10. Gamelan is a type of Javanese _____.</div>
+                <input type="text" name="q10" required>
+            </div>
+            
+            <div class="button-container">
+                <button type="button" class="back-button" onclick="window.location.href='menu_ujian_inggris.html'">Back to Menu</button>
+                <button type="submit">Submit Answers</button>
+            </div>
+        </form>
+    </div>
 
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const participant = document.getElementById('participant').value;
+            if (!participant) {
+                alert('Please select your name');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const answers = {
+                participant: participant,
+                timestamp: new Date().toISOString(),
+                q1: formData.get('q1'),
+                q2: formData.get('q2'),
+                q3: formData.get('q3'),
+                q4: formData.get('q4'),
+                q5: formData.get('q5'),
+                q6: formData.get('q6'),
+                q7: formData.get('q7'),
+                q8: formData.get('q8'),
+                q9: formData.get('q9'),
+                q10: formData.get('q10')
+            };
+            
+            fetch('https://script.google.com/macros/s/AKfycbzqNCbfb6gAdXuWsvOsJggyIP-Al4LFztQ3V166YtmifSGP438ZpTNiUVpafDlOUT9jrw/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(answers)
+            })
+            .then(() => {
+                alert('Your answers have been submitted successfully!');
+                this.reset();
+                document.getElementById('participant').value = '';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your answers. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
