@@ -1,1 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belitung Tourism Essay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+        select {
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+        select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .question {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+        .question h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .success-message {
+            display: none;
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Belitung Tourism Essay</h1>
+        
+        <form id="essayForm">
+            <div class="form-group">
+                <label for="participant">Participant Name:</label>
+                <select id="participant" name="participant" required>
+                    <option value="">-- Select Participant --</option>
+                    <option value="John Doe">John Doe</option>
+                    <option value="Jane Smith">Jane Smith</option>
+                    <option value="Michael Johnson">Michael Johnson</option>
+                    <option value="Sarah Williams">Sarah Williams</option>
+                    <option value="David Brown">David Brown</option>
+                </select>
+            </div>
+            
+            <div class="question">
+                <h3>Question 1: Airport Transfer to Golden Tulip Belitung</h3>
+                <p>Write an essay about executing a transfer from the airport to Golden Tulip Belitung hotel.</p>
+                <textarea id="answer1" name="answer1" required></textarea>
+            </div>
+            
+            <div class="question">
+                <h3>Question 2: Tanjung Pendam Beach Commentary</h3>
+                <p>Write a commentary describing the tourist attraction of Tanjung Pendam Beach.</p>
+                <textarea id="answer2" name="answer2" required></textarea>
+            </div>
+            
+            <button type="submit">Submit Answers</button>
+        </form>
+        
+        <div id="successMessage" class="success-message">
+            Your answers have been submitted successfully!
+        </div>
+    </div>
 
+    <script>
+        document.getElementById('essayForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const participant = document.getElementById('participant').value;
+            const answer1 = document.getElementById('answer1').value;
+            const answer2 = document.getElementById('answer2').value;
+            
+            fetch('https://script.google.com/macros/s/AKfycbxWhqP8ofZudh95ho1yxe8MVsjOUj21PJ8vxxGdmzHvgYF9gJXp0O4KRirWZzA_uFfc/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    participant: participant,
+                    answer1: answer1,
+                    answer2: answer2
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('essayForm').reset();
+                    document.getElementById('successMessage').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 3000);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
